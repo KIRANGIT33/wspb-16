@@ -7,7 +7,7 @@ import {
 } from "../store/expense.js";
 import type { NewExpense } from "../types/expense.js";
 
-function parseNewExpense(body: unknown): NewExpense | null {
+export function parseNewExpense(body: unknown): NewExpense | null {
         const { description, amount, date } = body as Partial<NewExpense>;
 
         if (
