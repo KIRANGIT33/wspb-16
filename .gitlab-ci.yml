@@ -1,0 +1,19 @@
+stages:
+  - lint
+  - build
+
+client-lint:
+  stage: lint
+  image: node:22
+  script:
+    - cd client
+    - npm ci
+    - npm run lint
+
+client-build:
+  stage: build
+  image: node:22
+  script:
+    - cd client
+    - npm ci
+    - npm run build
