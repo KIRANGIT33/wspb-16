@@ -1,65 +1,65 @@
 import { Router } from "express";
 import {
-    addCategory,
-    deleteCategory,
-    getCategories,
-    updateCategory,
+	addCategory,
+	deleteCategory,
+	getCategories,
+	updateCategory,
 } from "../store/category.js";
 import type { NewCategory } from "../types/category.js";
 
 export function parseNewCategory(body: unknown): NewCategory | null {
-    const { name } = body as Partial<NewCategory>;
+	const { name } = body as Partial<NewCategory>;
 
-    if (typeof name !== "string") {
-        return null;
-    }
+	if (typeof name !== "string") {
+		return null;
+	}
 
-    return { name };
+	return { name };
 }
 
 export const categoryRouter = Router();
 
 categoryRouter.get("/", async (_req, res) => {
-    res.json(await getCategories());
+	res.json(await getCategories());
 });
 
 categoryRouter.post("/", async (req, res) => {
-    const newCategory = parseNewCategory(req.body);
+	const newCategory = parseNewCategory(req.body);
 
-    if (!newCategory) {
-        res.status(400).json({ error: "name is required" });
-        return;
-    }
+	if (!newCategory) {
+		res.status(400).json({ error: "name is required" });
+		return;
+	}
 
-    const category = await addCategory(newCategory);
-    res.status(201).json(category);
+	const category = await addCategory(newCategory);
+	res.status(201).json(category);
 });
 
 categoryRouter.put("/:id", async (req, res) => {
-    const update = parseNewCategory(req.body);
+	const update = parseNewCategory(req.body);
 
-    if (!update) {
-        res.status(400).json({ error: "name is required" });
-        return;
-    }
+	if (!update) {
+		res.status(400).json({ error: "name is required" });
+		return;
+	}
 
-    const category = await updateCategory(req.params.id, update);
+	const category = await updateCategory(req.params.id, update);
 
-    if (!category) {
-        res.status(404).json({ error: "Category not found" });
-        return;
-    }
+	if (!category) {
+		res.status(404).json({ error: "Category not found" });
+		return;
+	}
 
-    res.json(category);
+	res.json(category);
 });
 
 categoryRouter.delete("/:id", async (req, res) => {
-    const deleted = await deleteCategory(req.params.id);
+	const deleted = await deleteCategory(req.params.id);
 
-    if (!deleted) {
-        res.status(404).json({ error: "Category not found" });
-        return;
-    }
+	if (!deleted) {
+		res.status(404).json({ error: "Category not found" });
+		return;
+	}
 
-    res.status(204).send();
+	res.status(204).send();
 });
