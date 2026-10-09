@@ -8,6 +8,7 @@
 		"dev": "tsx watch --env-file=.env src/server.ts",
 		"build": "tsc",
 		"start": "node dist/server.js",
+		"start:ci": "node dist/server.js",
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"test": "vitest --run",
