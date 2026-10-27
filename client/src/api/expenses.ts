@@ -1,9 +1,11 @@
 import type { Expense, NewExpense } from "../types/expense";
 
-// Thin wrapper around the backend REST API — one function per endpoint.
-// Nothing else in the app should call `fetch` directly; this is the only
-// place that knows the API's URL and shape.
-const API_URL = "http://localhost:3001/api/expenses";
+const BASE_URL =
+	window.__ENV__?.API_URL ??
+	import.meta.env.VITE_API_URL ??
+	"http://localhost:3001";
+
+const API_URL = `${BASE_URL}/api/expenses`;
 
 export async function fetchExpenses(): Promise<Expense[]> {
 	const res = await fetch(API_URL);

@@ -1,6 +1,11 @@
 import type { Category, NewCategory } from "../types/category";
 
-const API_URL = "http://localhost:3001/api/categories";
+const BASE_URL =
+	window.__ENV__?.API_URL ??
+	import.meta.env.VITE_API_URL ??
+	"http://localhost:3001";
+
+const API_URL = `${BASE_URL}/api/categories`;
 
 export async function fetchCategories(): Promise<Category[]> {
 	const res = await fetch(API_URL);
